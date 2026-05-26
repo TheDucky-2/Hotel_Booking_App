@@ -1,0 +1,48 @@
+# dependencies
+node_modules/
+
+# environment variables
+.env
+.env.local
+
+# logs
+logs/
+*.log
+npm-debug.log*
+
+# runtime files
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# coverage
+coverage/
+
+# uploads/temp files
+uploads/
+tmp/
+temp/
+
+# database files
+*.sqlite
+*.db
+
+# build output
+dist/
+build/
+
+# editor/system files
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# cache
+.cache/
+
+# PM2
+.pm2/
+
+# optional MongoDB local data folder
+/data/db/
