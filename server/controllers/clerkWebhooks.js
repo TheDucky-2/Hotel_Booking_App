@@ -15,15 +15,18 @@ const clerkWebhooks= async(req, res) => {
             "svix-signature": req.headers["svix-signature"]
         };
 
-        // Verifying headers
+        const payload = req.body.toString();
 
-        await webhook.verify(JSON.stringify(req.body), headers)
+        // Verifying headers
+        await webhook.verify(payload, headers)
+
+        console.log(req.body)
 
         // Getting data from request body
-        const {data, type} = req.body
+        const {data, type} = JSON.parse(payload);
 
         const userData = {
-            _id : data.id,
+            id : data.id,
             email: data.email_addresses[0].email_address,
             username: data.first_name + " " + data.last_name,
             image: data.image_url
@@ -37,12 +40,12 @@ const clerkWebhooks= async(req, res) => {
             }
 
             case "user.updated": {
-                await User.findByIdAndUpdate(data.id, userData);
+                await User.findByIdAndUpdate({clerkId: data.id}, userData);
                 break;
             }
 
             case "user.deleted": {
-                await User.findByIdAndDelete(data.id);
+                await User.findByIdAndDelete({clerkId: data.id});
                 break;
             }
 
