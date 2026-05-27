@@ -37,9 +37,9 @@ const clerkWebhooks= async(req, res) => {
             case "user.created": {
                 console.log("Creating user");
 
-                await User.create(userData);
+                const createdUser = await User.create(userData);
+                console.log("Created user: ", createdUser)
                 break;
-
             }
 
             case "user.updated": {
