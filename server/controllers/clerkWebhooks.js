@@ -20,8 +20,6 @@ const clerkWebhooks= async(req, res) => {
         // Verifying headers
         await webhook.verify(payload, headers)
 
-        console.log(req.body)
-
         // Getting data from request body
         const {data, type} = JSON.parse(payload);
 
@@ -32,7 +30,6 @@ const clerkWebhooks= async(req, res) => {
         image: data.image_url
         };
         
-        console.log("EVENT TYPE:", type);
         switch(type){
             case "user.created": {
                 console.log("Creating user");
@@ -58,7 +55,6 @@ const clerkWebhooks= async(req, res) => {
         res.json({success: true, message: "Webhook Received"})
 
     }catch(error){
-        console.log(error)
         console.log(error.message);
         res.json({success: false, message: error.message})
     }
