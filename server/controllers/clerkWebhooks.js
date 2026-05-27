@@ -31,9 +31,11 @@ const clerkWebhooks= async(req, res) => {
             username: data.first_name + " " + data.last_name,
             image: data.image_url
         }
-
+        console.log("EVENT TYPE:", type);
         switch(type){
             case "user.created": {
+                console.log("Creating user");
+
                 await User.create(userData);
                 break;
 
