@@ -23,7 +23,7 @@ const checkRoomAvailability = async ({checkInDate, checkOutDate, room}) => {
 
 // API to check availability
 // POST /api/bookings/check-availability
-export const checkAvailabilityAPI = async (req, res)=> {
+export const checkAvailability = async (req, res)=> {
 
     try{
         const {room, checkInDate, checkOutDate} = req.body;
@@ -46,7 +46,7 @@ export const checkAvailabilityAPI = async (req, res)=> {
 // Creating a new booking
 // POST /api/bookings/book
 
-export const createBookingAPI = async(req, res) => {
+export const createBooking = async(req, res) => {
 
     try{
 
