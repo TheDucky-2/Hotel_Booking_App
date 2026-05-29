@@ -1,5 +1,5 @@
 import mongoose, { mongo } from "mongoose";
-import User from "./user";
+import User from "./user.js";
 
 const hotelSchema = new mongoose.Schema({
     name: {type: String, required: true},

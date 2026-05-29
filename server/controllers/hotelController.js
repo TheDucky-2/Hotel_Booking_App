@@ -1,7 +1,7 @@
 import Hotel from "../models/hotel.js"
 import User from "../models/user.js"
 
-export const registerHotel = (req, res) => {
+export const registerHotel = async (req, res) => {
 
     try{
 
