@@ -1,5 +1,6 @@
 import Hotel from "../models/hotel.js"
 import User from "../models/user.js"
+import config from "../config/config.js"
 
 export const registerHotel = async (req, res) => {
 
@@ -25,7 +26,7 @@ export const registerHotel = async (req, res) => {
         });
 
         // adding user role as Hotel owner
-        await User.findByIdAndUpdate(owner, {role: "HotelOwner"});
+        await User.findByIdAndUpdate(owner, {role: config.HOTEL_OWNER});
 
         res.json({
             success: true,
