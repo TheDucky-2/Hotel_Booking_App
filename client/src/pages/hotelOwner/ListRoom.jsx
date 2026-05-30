@@ -1,10 +1,39 @@
-import React, { useState } from 'react'
-import { assets, roomsDummyData } from '../../assets/assets'
-import Title from '../../components/Title';
+import React, { useEffect, useState } from 'react';
+import { assets, roomsDummyData } from '../../assets/assets.js';
+import Title from '../../components/Title.jsx';
+import {useAppContext} from '../../context/AppContext.jsx';
+import toast from 'react-hot-toast';
 
 const ListRoom = () => {
 
-  const [rooms, setRooms] = useState(roomsDummyData);
+  const [rooms, setRooms] = useState([]);
+  const {axios , getToken, user} = useAppContext();
+
+  // Fetch Rooms of Hotel Owner
+  const fetchRooms = async() => {
+    try{
+
+      const {data} = await axios.get('/api/rooms/owner', {headers: {Authorization: `Bearer ${await getToken()}`}})
+
+      if(data.success){
+        setRooms(data.rooms)
+      }else{
+        toast.error(data.message);
+      }
+    }
+    catch(error){
+      toast.error(error.message);
+
+    }
+  }
+
+  useEffect(()=> {
+
+    if(user){
+      fetchRooms();
+    }
+  })
+
   return (
     <div>
       <Title align="left" font="outfit" title="Room Listings"
