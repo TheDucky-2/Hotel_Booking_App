@@ -119,12 +119,14 @@ export const getUserBookings = async(req, res) => {
 
         const user = req.user._id
         
-        const bookings = await Bookings.find({user}).populate("hotel room").sort({createdAt: -1})
+        const bookings = await Booking.find({user}).populate("hotel room").sort({createdAt: -1})
         res.json({
             success: true,
             bookings
         })
+
     }catch(error){
+
         res.json({
             success:false,
             message: "Failed to fetch bookings"
@@ -133,8 +135,7 @@ export const getUserBookings = async(req, res) => {
 }
 
 export const getHotelBookings = async(req, res) => {
-    try
-    {const hotel = await Hotel.findOne({owner: req.auth.userId});
+    try{const hotel = await Hotel.findOne({owner: req.user._id});
 
     if(!hotel){
         return res.json({
@@ -143,7 +144,7 @@ export const getHotelBookings = async(req, res) => {
         });
     }
 
-    const bookings = await Bookings.find({hotel: hotel._id}).populate("hotel room user").sort({createdAt: -1});
+    const bookings = await Booking.find({hotel: hotel._id}).populate("hotel room user").sort({createdAt: -1});
 
     // Total bookings
 
@@ -151,16 +152,19 @@ export const getHotelBookings = async(req, res) => {
 
     // Total revenue
     
-    const totalRevenue = bookings.reduce((acc, bookning) => acc+ booking.totalPrice, 0)
+    const totalRevenue = bookings.reduce((acc, booking) => acc+ booking.totalPrice, 0)
 
     res.json({
         success:true,
         dashboardData: {totalBookings, totalRevenue, bookings}
-    })}
-    catch{error}{
+
+    })
+
+    }catch{error}{
 
         res.json({
             success:false,
-            message: "Failed to fetch bookings"})
+            message: "Failed to fetch bookings"
+        })
     }
 }
