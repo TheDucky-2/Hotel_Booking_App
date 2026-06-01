@@ -1,5 +1,7 @@
 import Booking from '../models/booking.js'
 import Room from '../models/room.js';
+import transporter from '../config/nodemailer.js';
+import config from '../config/config.js';
 
 // Check availability of room
 
@@ -49,7 +51,6 @@ export const checkAvailability = async (req, res)=> {
 export const createBooking = async(req, res) => {
 
     try{
-
         // Checking availability before booking
 
         const {room, checkInDate, checkOutDate, guests} = req.body;
@@ -80,7 +81,7 @@ export const createBooking = async(req, res) => {
 
         const timeDiff = checkOut.getTime() - checkIn.getTime();
 
-        const nights = Math.ceil((timeDiff/1000*3600*24));
+        const nights = Math.ceil(timeDiff/(1000*3600*24));
 
         totalPrice*=nights;
 
@@ -95,6 +96,28 @@ export const createBooking = async(req, res) => {
             checkOutDate,
             totalPrice
         })
+
+        const mailOptions = {
+        from: config.SENDER_EMAIL, // sender address
+        to: req.user.email, // list of recipients
+        subject: "Hotel Booking Details", // subject line
+        html: `<h2> Your Booking Details </h2>
+              <p> Dear ${req.user.username}, </p>
+              <p> Thank you for your booking! Here are your booking details: </p>
+              <ul>
+                <li><strong> Booking ID: </strong> ${booking._id} </li>
+                <li><strong> Hotel Name: </strong> ${roomData.hotel.name} </li>
+                <li><strong> Location: </strong> ${roomData.hotel.address} </li>
+                <li><strong> Date: </strong> ${booking.checkInDate.toDateString()} </li>
+                <li><strong> Booking Amount: </strong> ${config.CURRENCY || '$'} ${booking.totalPrice} /night</li>
+              </ul> 
+              <p> We look forward to welcoming you! </p>
+              <p> If you wish to make any changes, feel free to contact us. </p> 
+        `, // HTML body
+        }
+
+        await transporter.sendMail(mailOptions);
+    
 
         res.json({
             success: true,
