@@ -119,7 +119,7 @@ export const userDummyData = {
     "username": "Great Stack",
     "email": "user.greatstack@gmail.com",
     "image": "https://www.identitygroup.com/wp-content/uploads/2020/08/Radisson-Radisson-Logo-1.jpg",
-    "role": "hotelOwner",
+    "role": "HotelOwner",
     "createdAt": "2025-03-25T09:29:16.367Z",
     "updatedAt": "2025-04-10T06:34:48.719Z",
     "__v": 1,

@@ -23,16 +23,17 @@ const clerkWebhooks= async(req, res) => {
         // Getting data from request body
         const {data, type} = JSON.parse(payload);
 
-        const userData = {
-        clerkId: data.id,
-        email: data.email_addresses?.[0]?.email_address || "",
-        username: `${data.first_name || ""} ${data.last_name || ""}`,
-        image: data.image_url
-        };
-        
         switch(type){
             case "user.created": {
                 console.log("Creating user");
+
+                const userData = {
+                clerkId: data.id,
+                email: data.email_addresses?.[0]?.email_address || "",
+                username: `${data.first_name || ""} ${data.last_name || ""}`,
+                image: data.image_url
+                };
+                        
 
                 const createdUser = await User.create(userData);
                 console.log("Created user: ", createdUser)
@@ -40,6 +41,14 @@ const clerkWebhooks= async(req, res) => {
             }
 
             case "user.updated": {
+
+                const userData = {
+                clerkId: data.id,
+                email: data.email_addresses?.[0]?.email_address || "",
+                username: `${data.first_name || ""} ${data.last_name || ""}`,
+                image: data.image_url
+                };
+        
                 await User.findOneAndUpdate({clerkId: data.id}, userData);
                 break;
             }

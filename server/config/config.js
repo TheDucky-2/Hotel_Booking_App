@@ -10,7 +10,12 @@ const config = {
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
     CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
-    HOTEL_OWNER:process.env.HOTEL_OWNER
-}
+    HOTEL_OWNER:process.env.HOTEL_OWNER,
+    BREVO_SMTP_SERVER: process.env.BREVO_SMTP_SERVER,
+    SENDER_EMAIL:process.env.SENDER_EMAIL,
+    BREVO_SMTP_USER:process.env.BREVO_SMTP_USER,
+    BREVO_SMTP_PASS:process.env.BREVO_SMTP_PASS,
+    CURRENCY: process.env.CURRENCY
+    }
 
 export default config;

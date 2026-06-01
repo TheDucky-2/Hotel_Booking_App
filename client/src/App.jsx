@@ -8,20 +8,23 @@ import RoomDetails from "./pages/RoomDetails.jsx"
 import MyBookings from './pages/MyBookings.jsx';
 import HotelRegistration from './components/HotelRegistration.jsx';
 import Layout from './pages/hotelOwner/Layout.jsx';
-import Dashboard from './pages/hotelOwner/Dashboard.jsx'
-import AddRoom from './pages/hotelOwner/AddRoom.jsx'
-import ListRoom from './pages/hotelOwner/ListRoom.jsx'
-
+import Dashboard from './pages/hotelOwner/Dashboard.jsx';
+import AddRoom from './pages/hotelOwner/AddRoom.jsx';
+import ListRoom from './pages/hotelOwner/ListRoom.jsx';
+import {Toaster} from 'react-hot-toast';
+import { useAppContext } from './context/AppContext.jsx';
 
 const App = () => {
 
   const isOwnerPath = useLocation().pathname.includes("owner");
+  const {showHotelRegistration} = useAppContext(); 
 
   return (
     <div>
+      <Toaster/>
       {!isOwnerPath && <Navbar/>}
       
-     {false && <HotelRegistration/>}
+     {showHotelRegistration && <HotelRegistration/>}
      
       <div className='min-h-[70vh'>
         <Routes>

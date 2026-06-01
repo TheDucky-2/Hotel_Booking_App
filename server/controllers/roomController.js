@@ -100,10 +100,12 @@ export const getOwnerRooms = async(req, res) => {
 export const toggleRoomAvailability = async(req, res) => {
 
     try{
-
+        console.log("BODY:", req.body);
         const {roomId} = req.body;
-        const roomData = await Room.findById(roomId);
 
+        console.log("Sending roomId:", roomId);
+        const roomData = await Room.findById(roomId);
+        console.log("Response:", roomData);
         roomData.isAvailable = !roomData.isAvailable;
 
         await roomData.save();
