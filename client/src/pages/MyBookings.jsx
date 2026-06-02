@@ -25,6 +25,21 @@ const MyBookings = () => {
     }
   }
 
+  const handlePayment = async(bookingId) => {
+    try{
+      const {data} = await axios.post('/api/bookings/make-payment', {bookingId},
+        {headers: {Authorization: `Bearer ${await getToken()}`}})
+
+        if(data.success){
+          window.location.href = data.url
+        }else{
+          toast.error(data.message)
+        }
+    }catch(error){
+      toast.error(error.message)
+    }
+  }
+
   useEffect(()=> {
     if(user){
       fetchUserBookings()
@@ -94,22 +109,20 @@ const MyBookings = () => {
           {/* ---- Payment Status  ---- */}
           <div className='flex flex-col items-start justify-center pt-3'>
               <div className='flex items-center gap-2'>
-                  <div className={`h-3 w-3 rounded-full 
-                    ${booking.isPaid ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                  <p className={`text-sm
-                    ${booking.isPaid ? 'text-green-500' : 'text-red-500'}`}>
+                  <div className={`h-3 w-3 rounded-full ${booking.isPaid ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                  <p className={`text-sm ${booking.isPaid ? 'text-green-500' : 'text-red-500'}`}>
                     {booking.isPaid ? "Paid" : "Unpaid"}  
                   </p>
               </div>
               {!booking.isPaid && (
-                <button className='px-4 py-1.5 mt-4 text-xs border border-gray-400
-                rounded-full hover:bg-gray-50 transition-all cursor-pointer'>
-                  Pay Now
-                </button>
+                
+             <button type="button" onClick={() => { handlePayment(booking._id)}}
+
+             className='px-4 py-1.5 mt-4 text-xs border border-gray-400
+             rounded-full hover:bg-gray-50 transition-all cursor-pointer'>
+               Pay Now
+              </button>
               )}
-
-
-
           </div>
 
         </div>

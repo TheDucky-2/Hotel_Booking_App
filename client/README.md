@@ -7,3 +7,5 @@
 - Clerk -> For Authentication
 - Toast -> For Notifications
 - Nodemailer -> for sending emails
+- Vercel -> For deploying the application
+- Git/Github -> For version control
